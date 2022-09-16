@@ -6,10 +6,6 @@ type block struct {
 	char string
 }
 
-func newBlock(x int, y int) block {
-	return block{
-		x:    x,
-		y:    y,
-		char: "░",
-	}
+func newBlock(x int, y int, char string) block {
+	return block{x, y, char}
 }
