@@ -10,47 +10,45 @@ type canvas struct {
 	width  int
 	height int
 	cells  cell
-	blocks []block
 }
 
 func NewCanvas(width int, height int) *canvas {
-	return &canvas{
-		width:  width,
-		height: height,
-		cells:  make(cell, height),
+	cells := make(cell, height)
+	for i := range cells {
+		cells[i] = make([]string, width)
 	}
+
+	return &canvas{width, height, cells}
 }
 
-func (c *canvas) DrawCanvas() {
-	for i := range c.cells {
-		c.cells[i] = make([]string, c.width)
-	}
-
+func (c *canvas) Draw() *canvas {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
 			c.cells[i][j] = " "
 		}
 	}
+
+	return c
 }
 
-func (c *canvas) DrawBlock(total int) {
+func (c *canvas) DrawBlock(total int, char string) []block {
 	blocks := make([]block, total)
 
-	for i := range blocks {
+	for i := 0; i < total; i++ {
 		x := lib.Random(c.width)
 		y := lib.Random(c.height)
 
-		blocks[i] = newBlock(x, y)
-		c.cells[y][x] = blocks[i].char
+		blocks[i] = newBlock(x, y, char)
+		c.cells[y][x] = char
 	}
 
-	c.blocks = append(c.blocks, blocks...)
+	return blocks
 }
 
 func (c *canvas) Render() {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
-			fmt.Printf("%s", c.cells[i][j])
+			fmt.Printf("%+v", c.cells[i][j])
 		}
 		println()
 	}
