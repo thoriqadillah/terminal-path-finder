@@ -21,14 +21,14 @@ func NewCanvas(width int, height int) *canvas {
 	return &canvas{width, height, cells}
 }
 
-func (c *canvas) Draw() *canvas {
+func (c *canvas) Draw() canvas {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
 			c.cells[i][j] = " "
 		}
 	}
 
-	return c
+	return *c
 }
 
 func (c *canvas) DrawBlock(total int, char string) []block {
