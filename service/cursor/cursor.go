@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/thoriqadillah/terminal-path-finder/entity"
+	"github.com/thoriqadillah/terminal-path-finder/service/graph"
 )
 
 type iCursor interface {
 	refresh()
-	Render(canvas *entity.Canvas)
+	Render(graph *graph.Graph)
 }
 
 type cursor struct{}
@@ -22,8 +22,8 @@ func (c *cursor) refresh() {
 	fmt.Print("\u001b[H")
 }
 
-func (c *cursor) Render(canvas *entity.Canvas) {
+func (c *cursor) Render(graph *graph.Graph) {
 	time.Sleep(1000 * time.Millisecond / 60) //this will make the renderer runs certain fps/s
-	canvas.Display()
+	graph.Canvas.Display()
 	c.refresh()
 }

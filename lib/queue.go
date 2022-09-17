@@ -1,19 +1,24 @@
 package lib
 
-type iQueue[T any] interface {
+type IQueue[T any] interface {
 	IsEmpty() bool
 	Enqueue(element T)
 	Dequeue() T
+	Length() int
 }
 
 type queue[T any] struct {
 	*list[T]
 }
 
-func NewQueue[T any]() iQueue[T] {
+func NewQueue[T any]() IQueue[T] {
 	return &queue[T]{
 		newList[T](),
 	}
+}
+
+func (q *queue[T]) Length() int {
+	return len(q.Value)
 }
 
 func (q *queue[T]) IsEmpty() bool {

@@ -9,7 +9,7 @@ import (
 type Canvas struct {
 	width  int
 	height int
-	cells  cell
+	Cells  cell
 }
 
 func NewCanvas(width int, height int) *Canvas {
@@ -24,7 +24,7 @@ func NewCanvas(width int, height int) *Canvas {
 func (c *Canvas) Draw() Canvas {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
-			c.cells[i][j] = " "
+			c.Cells[i][j] = " "
 		}
 	}
 
@@ -38,8 +38,8 @@ func (c *Canvas) DrawBlock(total int, char string) []Block {
 		x := lib.Random(c.width)
 		y := lib.Random(c.height)
 
-		blocks[i] = newBlock(x, y, char)
-		c.cells[y][x] = char
+		blocks[i] = NewBlock(x, y, char)
+		c.Cells[y][x] = char
 	}
 
 	return blocks
@@ -48,7 +48,7 @@ func (c *Canvas) DrawBlock(total int, char string) []Block {
 func (c *Canvas) Display() {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
-			fmt.Printf("%+v", c.cells[i][j])
+			fmt.Printf("%+v", c.Cells[i][j])
 		}
 		println()
 	}
