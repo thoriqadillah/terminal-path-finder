@@ -1,6 +1,4 @@
-package service
-
-import "fmt"
+package cursor
 
 type iColor interface {
 	reset() string
@@ -10,22 +8,8 @@ type iColor interface {
 	SetYellow(str string) string
 }
 
-type iCursor interface {
-	refresh()
-}
-
-type cursor struct{}
-
 func NewColor() iColor {
 	return &cursor{}
-}
-
-func NewCursor() iCursor {
-	return &cursor{}
-}
-
-func (c *cursor) refresh() {
-	fmt.Print("\u001b[H")
 }
 
 func (c *cursor) reset() string {
