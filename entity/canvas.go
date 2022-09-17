@@ -6,22 +6,22 @@ import (
 	"github.com/thoriqadillah/terminal-path-finder/lib"
 )
 
-type canvas struct {
+type Canvas struct {
 	width  int
 	height int
 	cells  cell
 }
 
-func NewCanvas(width int, height int) *canvas {
+func NewCanvas(width int, height int) *Canvas {
 	cells := make(cell, height)
 	for i := range cells {
 		cells[i] = make([]string, width)
 	}
 
-	return &canvas{width, height, cells}
+	return &Canvas{width, height, cells}
 }
 
-func (c *canvas) Draw() canvas {
+func (c *Canvas) Draw() Canvas {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
 			c.cells[i][j] = " "
@@ -31,7 +31,7 @@ func (c *canvas) Draw() canvas {
 	return *c
 }
 
-func (c *canvas) DrawBlock(total int, char string) []block {
+func (c *Canvas) DrawBlock(total int, char string) []block {
 	blocks := make([]block, total)
 
 	for i := 0; i < total; i++ {
@@ -45,7 +45,7 @@ func (c *canvas) DrawBlock(total int, char string) []block {
 	return blocks
 }
 
-func (c *canvas) Render() {
+func (c *Canvas) Display() {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
 			fmt.Printf("%+v", c.cells[i][j])
