@@ -1,11 +1,11 @@
 package entity
 
-type block struct {
-	x    int
-	y    int
+type Block struct {
+	X    int
+	Y    int
 	char string
 }
 
-func newBlock(x int, y int, char string) block {
-	return block{x, y, char}
+func newBlock(x int, y int, char string) Block {
+	return Block{x, y, char}
 }

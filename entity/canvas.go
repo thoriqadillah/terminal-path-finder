@@ -31,8 +31,8 @@ func (c *Canvas) Draw() Canvas {
 	return *c
 }
 
-func (c *Canvas) DrawBlock(total int, char string) []block {
-	blocks := make([]block, total)
+func (c *Canvas) DrawBlock(total int, char string) []Block {
+	blocks := make([]Block, total)
 
 	for i := 0; i < total; i++ {
 		x := lib.Random(c.width)
