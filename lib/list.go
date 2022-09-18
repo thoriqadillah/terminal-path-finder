@@ -1,29 +1,45 @@
 package lib
 
-type list[T any] struct {
-	Value []T
+type List[T any] struct {
+	value []T
 }
 
-func newList[T any]() *list[T] {
-	return &list[T]{
-		Value: make([]T, 0, 10),
+func NewList[T any]() List[T] {
+	return List[T]{
+		value: make([]T, 0, 10),
 	}
 }
 
-func (l *list[T]) insertBack(value T) {
-	l.Value = append(l.Value, value)
+func (l *List[T]) IsEmpty() bool {
+	return l.Size() == 0
 }
 
-func (l *list[T]) removeFront() T {
-	first := l.Value[0]   //get the first element
-	l.Value = l.Value[1:] //remove the first element
+func (l *List[T]) GetValue() []T {
+	return l.value
+}
+
+func (l *List[T]) Size() int {
+	return len(l.value)
+}
+
+func (l *List[T]) InsertBack(value T) {
+	l.value = append(l.value, value)
+}
+
+func (l *List[T]) RemoveFront() T {
+	first := l.value[0]   //get the first element
+	l.value = l.value[1:] //remove the first element
 
 	return first
 }
 
-func (l *list[T]) removeLast() T {
-	last := l.Value[len(l.Value)-1]
-	l.Value = l.Value[:len(l.Value)-1]
+func (l *List[T]) RemoveLast() T {
+	last := l.value[len(l.value)-1]
+	l.value = l.value[:len(l.value)-1]
 
 	return last
+}
+
+func (l *List[T]) Get(index int) T {
+	return l.value[index]
 }

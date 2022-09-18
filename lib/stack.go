@@ -6,24 +6,14 @@ type iStack[T any] interface {
 	Pop() T
 }
 
-type stack[T any] struct {
-	*list[T]
-}
-
 func NewStack[T any]() iStack[T] {
-	return &stack[T]{
-		newList[T](),
-	}
+	return &List[T]{}
 }
 
-func (s *stack[T]) IsEmpty() bool {
-	return len(s.Value) == 0
+func (s *List[T]) Push(element T) {
+	s.InsertBack(element)
 }
 
-func (s *stack[T]) Push(element T) {
-	s.list.insertBack(element)
-}
-
-func (s *stack[T]) Pop() T {
-	return s.list.removeLast()
+func (s *List[T]) Pop() T {
+	return s.RemoveLast()
 }
