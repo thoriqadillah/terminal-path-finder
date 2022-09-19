@@ -49,7 +49,7 @@ func (g *graph) BFS() bool {
 		y := current.Y + neighbours[(i+2)%4]
 
 		if x < 0 || y < 0 || x >= len(g.Canvas.Cells[0]) || y >= len(g.Canvas.Cells) || // if index out of bound or
-			g.Canvas.Cells[y][x] == "░" || g.Canvas.Cells[y][x] == "█" || g.Canvas.Cells[y][x] == g.start.Char { //if visited or blocked
+			g.Canvas.Cells[y][x] == "░░" || g.Canvas.Cells[y][x] == "██" || g.Canvas.Cells[y][x] == g.start.Char { //if visited or blocked
 			continue
 		}
 
@@ -60,7 +60,7 @@ func (g *graph) BFS() bool {
 		if x == g.destination.X && y == g.destination.Y {
 			return true
 		}
-		g.Canvas.Cells[y][x] = "░"
+		g.Canvas.Cells[y][x] = "░░"
 	}
 
 	return false
@@ -79,7 +79,7 @@ func (g *graph) DFS() bool {
 		y := current.Y + neighbours[(i+2)%4]
 
 		if x < 0 || y < 0 || x >= len(g.Canvas.Cells[0]) || y >= len(g.Canvas.Cells) || // if index out of bound or
-			g.Canvas.Cells[y][x] == "░" || g.Canvas.Cells[y][x] == "█" || g.Canvas.Cells[y][x] == g.start.Char { //if visited or blocked
+			g.Canvas.Cells[y][x] == "░░" || g.Canvas.Cells[y][x] == "██" || g.Canvas.Cells[y][x] == g.start.Char { //if visited or blocked
 			continue
 		}
 
@@ -90,7 +90,7 @@ func (g *graph) DFS() bool {
 		if x == g.destination.X && y == g.destination.Y {
 			return true
 		}
-		g.Canvas.Cells[y][x] = "░"
+		g.Canvas.Cells[y][x] = "░░"
 	}
 
 	return false

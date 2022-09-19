@@ -24,7 +24,7 @@ func NewCanvas(width int, height int) *Canvas {
 func (c *Canvas) Draw() Canvas {
 	for i := 0; i < c.height; i++ {
 		for j := 0; j < c.width; j++ {
-			c.Cells[i][j] = " "
+			c.Cells[i][j] = "  "
 		}
 	}
 
