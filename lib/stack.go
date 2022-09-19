@@ -1,12 +1,12 @@
 package lib
 
-type iStack[T any] interface {
+type IStack[T any] interface {
 	IsEmpty() bool
 	Push(element T)
 	Pop() T
 }
 
-func NewStack[T any]() iStack[T] {
+func NewStack[T any]() IStack[T] {
 	return &List[T]{}
 }
 
