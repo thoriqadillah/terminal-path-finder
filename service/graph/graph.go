@@ -67,8 +67,7 @@ func (g *Graph) ReconstructPath(paths map[string]entity.Block, char string) {
 	current := paths[strconv.Itoa(g.destination.X)+"|"+strconv.Itoa(g.destination.Y)]
 
 	for current != g.start {
-		if (current.X != g.destination.X && current.Y != g.destination.Y) ||
-			(current.X != g.start.X && current.Y != g.start.Y) {
+		if current != g.destination || current != g.start {
 			g.Canvas.Cells[current.Y][current.X] = char
 		}
 		current = paths[strconv.Itoa(current.X)+"|"+strconv.Itoa(current.Y)]
