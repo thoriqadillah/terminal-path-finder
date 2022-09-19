@@ -23,15 +23,14 @@ func main() {
 	start := canvas.DrawBlock(1, color.SetBlue("█"))      //start
 	destination := canvas.DrawBlock(1, color.SetRed("█")) //end
 
-	graph := graph.NewGraph(start[0], destination[0]).GetBlocks(&canvas)
-	var path map[string]entity.Block
+	graph := graph.NewGraph(&start[0], &destination[0]).GetBlocks(&canvas)
 	found := false
 
 	for {
 		if !found {
-			path, found = graph.DFS()
+			found = graph.DFS()
 		} else {
-			graph.ReconstructPath(path, color.SetGreen("█"))
+			graph.ReconstructPath(color.SetGreen("█"))
 		}
 
 		cursor.Render(&canvas)

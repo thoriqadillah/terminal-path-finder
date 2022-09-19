@@ -8,15 +8,15 @@ import (
 )
 
 type Graph struct {
-	start       entity.Block
-	destination entity.Block
+	start       *entity.Block
+	destination *entity.Block
 	queue       lib.IQueue[entity.Block]
 	stack       lib.IStack[entity.Block]
 	Canvas      *entity.Canvas
 	path        map[string]entity.Block
 }
 
-func NewGraph(start entity.Block, destination entity.Block) *Graph {
+func NewGraph(start *entity.Block, destination *entity.Block) *Graph {
 	graph := Graph{
 		start:       start,
 		destination: destination,
@@ -24,8 +24,8 @@ func NewGraph(start entity.Block, destination entity.Block) *Graph {
 		stack:       lib.NewStack[entity.Block](),
 		path:        make(map[string]entity.Block),
 	}
-	graph.queue.Enqueue(start)
-	graph.stack.Push(start)
+	graph.queue.Enqueue(*start)
+	graph.stack.Push(*start)
 	key := strconv.Itoa(start.X) + "|" + strconv.Itoa(start.Y)
 	graph.path[key] = entity.Block{}
 	return &graph
@@ -36,14 +36,14 @@ func (g *Graph) GetBlocks(canvas *entity.Canvas) *Graph {
 	return g
 }
 
-func (g *Graph) BFS() (map[string]entity.Block, bool) {
-	neighbours := []int{-1, 1, 0, 0}
-
+func (g *Graph) BFS() bool {
 	if g.queue.IsEmpty() {
-		return g.path, false
+		return false
 	}
 
+	neighbours := []int{-1, 1, 0, 0}
 	current := g.queue.Dequeue()
+
 	for i := range neighbours {
 		x := current.X + neighbours[i]
 		y := current.Y + neighbours[(i+2)%4]
@@ -58,22 +58,22 @@ func (g *Graph) BFS() (map[string]entity.Block, bool) {
 		g.path[key] = current //make current node as parrent
 
 		if x == g.destination.X && y == g.destination.Y {
-			return g.path, true
+			return true
 		}
 		g.Canvas.Cells[y][x] = "░"
 	}
 
-	return g.path, false
+	return false
 }
 
-func (g *Graph) DFS() (map[string]entity.Block, bool) {
-	neighbours := []int{-1, 1, 0, 0}
-
+func (g *Graph) DFS() bool {
 	if g.queue.IsEmpty() {
-		return g.path, false
+		return false
 	}
 
+	neighbours := []int{-1, 1, 0, 0}
 	current := g.stack.Pop()
+
 	for i := range neighbours {
 		x := current.X + neighbours[i]
 		y := current.Y + neighbours[(i+2)%4]
@@ -88,21 +88,21 @@ func (g *Graph) DFS() (map[string]entity.Block, bool) {
 		g.path[key] = current //make current node as parrent
 
 		if x == g.destination.X && y == g.destination.Y {
-			return g.path, true
+			return true
 		}
 		g.Canvas.Cells[y][x] = "░"
 	}
 
-	return g.path, false
+	return false
 }
 
-func (g *Graph) ReconstructPath(paths map[string]entity.Block, char string) {
-	current := paths[strconv.Itoa(g.destination.X)+"|"+strconv.Itoa(g.destination.Y)]
+func (g *Graph) ReconstructPath(char string) {
+	current := g.path[strconv.Itoa(g.destination.X)+"|"+strconv.Itoa(g.destination.Y)]
 
-	for current != g.start {
-		if current != g.destination || current != g.start {
+	for current != *g.start {
+		if current != *g.destination || current != *g.start {
 			g.Canvas.Cells[current.Y][current.X] = char
 		}
-		current = paths[strconv.Itoa(current.X)+"|"+strconv.Itoa(current.Y)]
+		current = g.path[strconv.Itoa(current.X)+"|"+strconv.Itoa(current.Y)]
 	}
 }
