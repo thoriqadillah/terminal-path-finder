@@ -7,7 +7,7 @@ import (
 	"github.com/thoriqadillah/terminal-path-finder/lib"
 )
 
-type Graph struct {
+type graph struct {
 	start       *entity.Block
 	destination *entity.Block
 	queue       lib.IQueue[entity.Block]
@@ -16,8 +16,8 @@ type Graph struct {
 	path        map[string]entity.Block
 }
 
-func NewGraph(start *entity.Block, destination *entity.Block) *Graph {
-	graph := Graph{
+func NewGraph(start *entity.Block, destination *entity.Block) *graph {
+	graph := graph{
 		start:       start,
 		destination: destination,
 		queue:       lib.NewQueue[entity.Block](),
@@ -31,12 +31,12 @@ func NewGraph(start *entity.Block, destination *entity.Block) *Graph {
 	return &graph
 }
 
-func (g *Graph) GetBlocks(canvas *entity.Canvas) *Graph {
+func (g *graph) GetBlocks(canvas *entity.Canvas) *graph {
 	g.Canvas = canvas
 	return g
 }
 
-func (g *Graph) BFS() bool {
+func (g *graph) BFS() bool {
 	if g.queue.IsEmpty() {
 		return false
 	}
@@ -66,7 +66,7 @@ func (g *Graph) BFS() bool {
 	return false
 }
 
-func (g *Graph) DFS() bool {
+func (g *graph) DFS() bool {
 	if g.queue.IsEmpty() {
 		return false
 	}
@@ -96,7 +96,7 @@ func (g *Graph) DFS() bool {
 	return false
 }
 
-func (g *Graph) ReconstructPath(char string) {
+func (g *graph) ReconstructPath(char string) {
 	current := g.path[strconv.Itoa(g.destination.X)+"|"+strconv.Itoa(g.destination.Y)]
 
 	for current != *g.start {
