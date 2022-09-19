@@ -18,7 +18,7 @@ func main() {
 	cursor := cursor.NewCursor()
 	canvas := entity.NewCanvas(WIDTH, HEIGHT).Draw()
 
-	n := 0.40 * WIDTH * HEIGHT
+	n := 0.4 * WIDTH * HEIGHT
 	canvas.DrawBlock(int(n), "█")                         //hurdles
 	start := canvas.DrawBlock(1, color.SetBlue("█"))      //start
 	destination := canvas.DrawBlock(1, color.SetRed("█")) //end
@@ -29,7 +29,7 @@ func main() {
 
 	for {
 		if !found {
-			path, found = graph.BFS()
+			path, found = graph.DFS()
 		} else {
 			graph.ReconstructPath(path, color.SetGreen("█"))
 		}

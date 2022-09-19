@@ -11,6 +11,7 @@ type Graph struct {
 	start       entity.Block
 	destination entity.Block
 	queue       lib.IQueue[entity.Block]
+	stack       lib.IStack[entity.Block]
 	Canvas      *entity.Canvas
 	path        map[string]entity.Block
 }
@@ -20,9 +21,11 @@ func NewGraph(start entity.Block, destination entity.Block) *Graph {
 		start:       start,
 		destination: destination,
 		queue:       lib.NewQueue[entity.Block](),
+		stack:       lib.NewStack[entity.Block](),
 		path:        make(map[string]entity.Block),
 	}
 	graph.queue.Enqueue(start)
+	graph.stack.Push(start)
 	key := strconv.Itoa(start.X) + "|" + strconv.Itoa(start.Y)
 	graph.path[key] = entity.Block{}
 	return &graph
@@ -51,6 +54,36 @@ func (g *Graph) BFS() (map[string]entity.Block, bool) {
 		}
 
 		g.queue.Enqueue(entity.NewBlock(x, y, ""))
+		key := strconv.Itoa(x) + "|" + strconv.Itoa(y)
+		g.path[key] = current //make current node as parrent
+
+		if x == g.destination.X && y == g.destination.Y {
+			return g.path, true
+		}
+		g.Canvas.Cells[y][x] = "░"
+	}
+
+	return g.path, false
+}
+
+func (g *Graph) DFS() (map[string]entity.Block, bool) {
+	neighbours := []int{-1, 1, 0, 0}
+
+	if g.queue.IsEmpty() {
+		return g.path, false
+	}
+
+	current := g.stack.Pop()
+	for i := range neighbours {
+		x := current.X + neighbours[i]
+		y := current.Y + neighbours[(i+2)%4]
+
+		if x < 0 || y < 0 || x >= len(g.Canvas.Cells[0]) || y >= len(g.Canvas.Cells) || // if index out of bound or
+			g.Canvas.Cells[y][x] == "░" || g.Canvas.Cells[y][x] == "█" || g.Canvas.Cells[y][x] == g.start.Char { //if visited or blocked
+			continue
+		}
+
+		g.stack.Push(entity.NewBlock(x, y, ""))
 		key := strconv.Itoa(x) + "|" + strconv.Itoa(y)
 		g.path[key] = current //make current node as parrent
 
