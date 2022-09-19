@@ -23,7 +23,7 @@ func (c *cursor) refresh() {
 }
 
 func (c *cursor) Render(canvas *entity.Canvas) {
-	time.Sleep(1000 * time.Millisecond / 60) //this will make the renderer runs certain fps/s
+	time.Sleep(time.Second / 60) //this will make the renderer runs certain fps/s
 	canvas.Display()
 	c.refresh()
 }
