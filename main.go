@@ -10,8 +10,8 @@ func main() {
 	const (
 		// WIDTH  = 165
 		// HEIGHT = 40
-		WIDTH  = 60
-		HEIGHT = 40
+		WIDTH  = 70
+		HEIGHT = 20
 	)
 
 	color := cursor.NewColor()
@@ -20,14 +20,20 @@ func main() {
 
 	n := 0.40 * WIDTH * HEIGHT
 	canvas.DrawBlock(int(n), "█")                         //hurdles
-	start := canvas.DrawBlock(1, color.SetBlue("░"))      //start
-	destination := canvas.DrawBlock(1, color.SetRed("░")) //end
+	start := canvas.DrawBlock(1, color.SetBlue("█"))      //start
+	destination := canvas.DrawBlock(1, color.SetRed("█")) //end
 
-	graph := graph.NewGraph(&start[0], &destination[0]).GetBlocks(&canvas)
+	graph := graph.NewGraph(start[0], destination[0]).GetBlocks(&canvas)
+	var path map[string]entity.Block
+	found := false
+
 	for {
-		graph.BFS()
-		cursor.Render(graph)
+		if !found {
+			path, found = graph.BFS()
+		} else {
+			graph.ReconstructPath(path, color.SetGreen("█"))
+		}
 
+		cursor.Render(&canvas)
 	}
-
 }
