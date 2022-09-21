@@ -7,13 +7,13 @@ type IStack[T any] interface {
 }
 
 func NewStack[T any]() IStack[T] {
-	return &List[T]{}
+	return &list[T]{}
 }
 
-func (s *List[T]) Push(element T) {
+func (s *list[T]) Push(element T) {
 	s.InsertBack(element)
 }
 
-func (s *List[T]) Pop() T {
+func (s *list[T]) Pop() T {
 	return s.RemoveLast()
 }

@@ -7,13 +7,13 @@ type IQueue[T any] interface {
 }
 
 func NewQueue[T any]() IQueue[T] {
-	return &List[T]{}
+	return &list[T]{}
 }
 
-func (q *List[T]) Enqueue(element T) {
+func (q *list[T]) Enqueue(element T) {
 	q.InsertBack(element)
 }
 
-func (q *List[T]) Dequeue() T {
+func (q *list[T]) Dequeue() T {
 	return q.RemoveFront()
 }
