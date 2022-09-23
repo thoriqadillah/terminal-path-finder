@@ -1,4 +1,4 @@
-package lib
+package list
 
 type IStack[T any] interface {
 	IsEmpty() bool

@@ -3,7 +3,7 @@ package entity
 import (
 	"fmt"
 
-	"github.com/thoriqadillah/terminal-path-finder/lib"
+	"github.com/thoriqadillah/terminal-path-finder/lib/random"
 )
 
 type Canvas struct {
@@ -35,8 +35,8 @@ func (c *Canvas) DrawBlock(total int, char string) []Block {
 	blocks := make([]Block, total)
 
 	for i := 0; i < total; i++ {
-		x := lib.Random(c.width)
-		y := lib.Random(c.height)
+		x := random.Random(c.width)
+		y := random.Random(c.height)
 
 		blocks[i] = NewBlock(x, y, char)
 		c.Cells[y][x] = char

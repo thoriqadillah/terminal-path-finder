@@ -1,4 +1,4 @@
-package lib
+package list
 
 type IQueue[T any] interface {
 	IsEmpty() bool

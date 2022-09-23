@@ -1,8 +1,7 @@
-package lib
+package list
 
 type IList[T any] interface {
 	IsEmpty() bool
-	GetValue() []T
 	Size() int
 	InsertBack(value T)
 	RemoveFront() T
@@ -22,10 +21,6 @@ func NewList[T any]() IList[T] {
 
 func (l *list[T]) IsEmpty() bool {
 	return l.Size() == 0
-}
-
-func (l *list[T]) GetValue() []T {
-	return l.value
 }
 
 func (l *list[T]) Size() int {

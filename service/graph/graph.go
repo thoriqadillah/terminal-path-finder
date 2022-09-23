@@ -4,14 +4,14 @@ import (
 	"strconv"
 
 	"github.com/thoriqadillah/terminal-path-finder/entity"
-	"github.com/thoriqadillah/terminal-path-finder/lib"
+	"github.com/thoriqadillah/terminal-path-finder/lib/list"
 )
 
 type graph struct {
 	start       *entity.Block
 	destination *entity.Block
-	queue       lib.IQueue[entity.Block]
-	stack       lib.IStack[entity.Block]
+	queue       list.IQueue[entity.Block]
+	stack       list.IStack[entity.Block]
 	Canvas      *entity.Canvas
 	path        map[string]entity.Block
 }
@@ -20,8 +20,8 @@ func NewGraph(start *entity.Block, destination *entity.Block) *graph {
 	graph := graph{
 		start:       start,
 		destination: destination,
-		queue:       lib.NewQueue[entity.Block](),
-		stack:       lib.NewStack[entity.Block](),
+		queue:       list.NewQueue[entity.Block](),
+		stack:       list.NewStack[entity.Block](),
 		path:        make(map[string]entity.Block),
 	}
 	graph.queue.Enqueue(*start)
